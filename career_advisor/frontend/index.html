@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career & Skills Advisor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .input-section {
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            background-color: #f9fafb;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            background-color: white;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .example-skills {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example-skills h3 {
+            color: #0369a1;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #0ea5e9;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: #0284c7;
+        }
+
+        .demo-section {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .demo-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .demo-cards {
+            display: grid;
+            gap: 20px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #4f46e5;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .demo-input {
+            background: #f1f5f9;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #475569;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .demo-output h4 {
+            color: #4f46e5;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .demo-output p {
+            color: #64748b;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .demo-steps {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .demo-steps li {
+            background: #f8fafc;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+            font-size: 0.95em;
+        }
+
+        .salary-info {
+            background: #ecfdf5;
+            color: #047857;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8fafc;
+            color: #64748b;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .instructions {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .instructions h3 {
+            color: #d97706;
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            color: #92400e;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .skill-tags {
+                justify-content: center;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-section {
+            display: none;
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .result-icon {
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Career & Skills Advisor</h1>
+            <p>Get personalized career recommendations powered by AI</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>📋 How to Use This Demo</h3>
+                <p>
+                    <strong>Step 1:</strong> Make sure your backend is running at <code>http://127.0.0.1:5000</code><br>
+                    <strong>Step 2:</strong> Enter your technical skills in the input box below<br>
+                    <strong>Step 3:</strong> Click "Get Career Advice" to see your personalized recommendation<br>
+                    <strong>Note:</strong> This is a demo interface. In a real app, this would connect automatically to the backend.
+                </p>
+            </div>
+
+            <!-- Input Section -->
+            <div class="input-section">
+                <form id="careerForm">
+                    <div class="input-group">
+                        <label for="skills">Enter Your Technical Skills:</label>
+                        <textarea 
+                            id="skills" 
+                            name="skills" 
+                            placeholder="Example: Python, SQL, Data Analysis, Machine Learning..."
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        🎯 Get Career Advice
+                    </button>
+                </form>
+            </div>
+
+            <!-- Example Skills -->
+            <div class="example-skills">
+                <h3>💡 Click on example skills to try:</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag" onclick="setSkills('Python, SQL, Data Analysis')">Python + SQL</span>
+                    <span class="skill-tag" onclick="setSkills('React, Node.js, JavaScript')">React + Node.js</span>
+                    <span class="skill-tag" onclick="setSkills('C#, ERPNext, Backend Development')">C# + ERP</span>
+                    <span class="skill-tag" onclick="setSkills('HTML, CSS, JavaScript, Frontend')">Frontend Web</span>
+                    <span class="skill-tag" onclick="setSkills('Java, Spring, Backend')">Java + Spring</span>
+                    <span class="skill-tag" onclick="setSkills('Mobile, Android, Flutter')">Mobile Development</span>
+                </div>
+            </div>
+
+            <!-- Loading Animation -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>AI is analyzing your skills...</p>
+            </div>
+
+            <!-- Result Section -->
+            <div id="result" class="result-section">
+                <div class="result-header">
+                    <div class="result-icon">✨</div>
+                    <h3 id="careerPath">Your Recommended Career Path</h3>
+                </div>
+                <div id="resultContent">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+
+            <!-- Demo Section -->
+            <div class="demo-section">
+                <h2>🎮 Live Demo Examples</h2>
+                <p style="color: #64748b; margin-bottom: 20px;">
+                    Here are some example responses you'll get when testing different skill combinations:
+                </p>
+
+                <div class="demo-cards">
+                    <!-- Demo Card 1 -->
+                    <div class="demo-card">
+                        <div class="demo-input">
+                            <strong>Input:</strong> "Python, SQL, Data Analysis"
+                        </div>
+                        <div class="demo-output">
+                            <h4>🎯 Data Analyst / Data Scientist</h4>
+                            <p>Perfect for analyzing business data and creating insights</p>
+                            <ul class="demo-steps">
+                                <li>Learn pandas and numpy for data manipulation</li>
+                                <li>Master data visualization with matplotlib/seaborn</li>
+                                <li>Study statistics and machine learning basics</li>
+                                <li>Practice SQL queries on real datasets</li>
+                            </ul>
+                            <div class="salary-info">💰 $60,000 - $120,000</div>
+                        </div>
+                    </div>
+
+                    <!-- Demo Card 2 -->
+                    <div class="demo-card">
+                        <div class="demo-input">
+                            <strong>Input:</strong> "React, Node.js, JavaScript"
+                        </div>
+                        <div class="demo-output">
+                            <h4>🌐 Full Stack Web Developer</h4>
+                            <p>Build complete web applications from front to back</p>
+                            <ul class="demo-steps">
+                                <li>Master React hooks and state management</li>
+                                <li>Learn Express.js and REST API development</li>
+                                <li>Practice with MongoDB or PostgreSQL</li>
+                                <li>Understand authentication and security</li>
+                            </ul>
+                            <div class="salary-info">💰 $65,000 - $125,000</div>
+                        </div>
+                    </div>
+
+                    <!-- Demo Card 3 -->
+                    <div class="demo-card">
+                        <div class="demo-input">
+                            <strong>Input:</strong> "C#, ERPNext, Backend Development"
+                        </div>
+                        <div class="demo-output">
+                            <h4>🏢 Backend ERP Developer</h4>
+                            <p>Specialize in enterprise resource planning systems</p>
+                            <ul class="demo-steps">
+                                <li>Master ASP.NET Core and Web APIs</li>
+                                <li>Learn database design and optimization</li>
+                                <li>Understand ERP modules (Finance, HR, Supply Chain)</li>
+                                <li>Practice with ERPNext customization</li>
+                            </ul>
+                            <div class="salary-info">💰 $70,000 - $130,000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>🏆 AI Career & Skills Advisor</strong></p>
+            <p>Hackathon Prototype - Built with Flask + Pure HTML/CSS</p>
+            <p>Backend API: <code>http://127.0.0.1:5000</code></p>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript for basic functionality
+        function setSkills(skillText) {
+            document.getElementById('skills').value = skillText;
+        }
+
+        // Handle form submission
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const skills = document.getElementById('skills').value.trim();
+            if (!skills) {
+                alert('Please enter your skills first!');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            // Make API call
+            fetch('http://127.0.0.1:5000/recommend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ skills: skills })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                
+                if (data.status === 'success') {
+                    // Show results
+                    displayResults(data);
+                } else {
+                    alert('Error: ' + (data.error || 'Something went wrong'));
+                }
+            })
+            .catch(error => {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                
+                console.error('Error:', error);
+                alert('Error connecting to backend. Make sure your Flask server is running at http://127.0.0.1:5000');
+            });
+        });
+
+        function displayResults(data) {
+            document.getElementById('careerPath').textContent = data.career_path;
+            
+            const resultContent = document.getElementById('resultContent');
+            resultContent.innerHTML = `
+                <p style="color: #059669; font-size: 1.1em; margin-bottom: 15px;">
+                    <strong>${data.personalized_message}</strong>
+                </p>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #4f46e5; margin-bottom: 10px;">📝 Description:</h4>
+                    <p style="line-height: 1.6;">${data.description}</p>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="color: #4f46e5; margin-bottom: 10px;">🎯 Next Steps:</h4>
+                    <ul style="list-style: none; padding-left: 0;">
+                        ${data.next_steps.map(step => `<li style="background: #f8fafc; padding: 8px 12px; margin: 5px 0; border-radius: 6px; border-left: 3px solid #22c55e;">${step}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                    <div style="background: #ecfdf5; color: #047857; padding: 10px 15px; border-radius: 8px; font-weight: 600;">
+                        💰 ${data.salary_range}
+                    </div>
+                    <div style="background: #eff6ff; color: #1d4ed8; padding: 10px 15px; border-radius: 8px; font-weight: 600;">
+                        📈 ${data.job_growth}
+                    </div>
+                    <div style="background: #fef3c7; color: #d97706; padding: 10px 15px; border-radius: 8px; font-weight: 600;">
+                        🎯 Confidence: ${data.confidence_score}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
